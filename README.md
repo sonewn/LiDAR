@@ -28,7 +28,7 @@ Autonomous vehicles mainly use 32 multi-channel LiDARs. And when we install a Li
 
 <br>
 The LiDAR sensor consist of a single laser pulse transmitter for each channel and a receiver, and we can say that one laser pulse represents a point channel.
-Point channels are evenly distributed within the elevation range *from -25˚ to 15˚**(양각 범위) based on the horizon line. <br>
+Point channels are evenly distributed within the elevation range **from -25˚ to 15˚**(양각 범위) based on the horizon line. <br>
 
 The LiDAR sensor, which has a number of point channels, rotates by θ˚ in the azimuth direction, and the point channels continuously measure the distance at every short cycle. When it rotates about the azimuth, we measure the distance at every 0.1˚ to 0.4˚. If the resolution is 0.1 degrees, we measure 3,600 times at 360 degrees, which means there are 3,600 channels.<br>
 As the LiDAR rotates, it makes 10 to 20 measurements per second. So the rotational speed is 10 Hz to 20 Hz.
