@@ -122,4 +122,19 @@ If you keep looking for clusters like this, some points don't have overlapping c
 
 #### (2) K-Means clustering
 
-This has the disadvantage of setting the number of clusters in the LiDAR Point Cloud in advance. The LiDAR points are gray dots on the left. If you know that there are four clusters here, you specify four points.
+This technique has the disadvantage of setting the number of clusters in the LiDAR Point Cloud in advance. 
+The LiDAR points are gray dots, If you know that there are four clusters here, you specify four points. Ofcourse the first four points are randomly specified. Now gathering points for the explanation. So we'are going to specify these four points, and then aggregate the rest of the points in the nearest cluster of these four.
+
+So we call this the Expectation Step. For example, the points in the upper left corner are the closest to the blue dot, to this is the blue cluster. The points in the lower right corner are the closest to the purple cluster in the center, so they are the same cluster as the purple one. After grouping the rest of the points, you will get the new average of the blue cluster, the green cluster, and so on. The average will be changed.
+
+And the centroid of enw clusters is different from the four points we initially specified, and we regroup the clusters that are closest to these newly created averages. If you repeat the process of grouping and finding the new average a few times, you will get the clustering results like the one shown on the right side.
+
+> 1\~2. We specify three points as K1, K2, and K3 and grouping by designated location <br>
+3\~5. Initializing the position of the centroid to the average position calculated in step 4 in step 5. <br>
+6. A new centroid is found again by clustering from the previous centroid.
+<br>
+If you continue to repeat steps 3~5, the centroid and the cluster will no longer change, which means hath we're finished with the clustering.
+
+
+
+
