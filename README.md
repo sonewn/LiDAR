@@ -8,13 +8,15 @@
 
 A LiDAR senseor sends a laser pulse in any particular direction and then we measure the time until a laser pulse hits an external object and is reflected back to the LiDAR is measured.
 This measured time is called Time of Flight(ToF). ToF is measured to calculate the distance to the external object.<br>
-Laser pulses travel at the speed of light, TOF multiplied by the speed of light equals the round trip distance. If you divide the round trip distance in half, you will finally get the distance to the external object.
+
+* **ToF (Time of Flight)** <br>
+  * Laser pulses travel at the speed of light, TOF multiplied by the speed of light equals the round trip distance. If you divide the round trip distance in half, you will finally get the distance to the external object.
+  * Most of the LiDAR sensors that are commercialized these days use infrared frequencies. The LiDAR emits an infrared laser with a frequency of 332THz (903nm) and 346THz (865nm). 
 
 <img src="https://user-images.githubusercontent.com/89831708/184099225-0c75a1ed-fe0c-4008-8eea-52ef6981bfbe.png" width="600" height="400"/> [image source](https://en.wikipedia.org/wiki/Lidar)
 
-* Using Infrared Frequencies
-Most of the LiDAR sensors that are commercialized these days use infrared frequencies.
-The LiDAR emits an infrared laser with a frequency of 332THz (903nm) and 346THz (865nm). 
+
+
 
 <br>
 
@@ -35,7 +37,9 @@ The LiDAR sensor, which has a number of point channels, rotates by θ˚ in the a
 As the LiDAR rotates, it makes 10 to 20 measurements per second. So the rotational speed is 10 Hz to 20 Hz.
 
 
-**[channel example]**
+
+
+**[LiDAR channels example]**
 |point|contents|
 |:---:|:---:|
 |point 1|x, y, z, Time, Intensity, Channel Index |
@@ -43,6 +47,12 @@ As the LiDAR rotates, it makes 10 to 20 measurements per second. So the rotation
 |point N | x, y, z, Time, Intensity, Channel, Index |
 
 <br>
+
+* Measurement of LiDAR (Multi channels)
+
+  * the distance **R** to the object that is calculated from ToF, the Azimuth angle θ, and the elevation angle Φ. 
+  * the direction of the laser signal from LiDAR is determined by θ and Φ. 
+  * the three-dimensional position information is calculated by the direction and the distance R.
 
 
 ## 2. Preprocessing algorithms for Point Cloud data
