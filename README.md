@@ -99,9 +99,27 @@ If there aren't, we remove them because we consider them as points that are far 
 
 <img src="https://user-images.githubusercontent.com/89831708/184300544-2abd1565-cdb5-4c31-8fff-a9b3ebc3be80.png" width="600" height="400"/> [이미지 출처](https://velog.io/@lottocomeon/Lidar)
 
-If you calculate the distance to the nearest K points for each point, you can calculate the average distance among them. Then you can calculate the standard deviation of the distance. If the distace between each point and the surrounding K-points is very different from certain distribution, these K-points are quite far from one point.
+If you calculate the distance to the nearest K points for each point, you can calculate the average distance among them. Then you can calculate the standard deviation of the distance. If the distance between each point and the surrounding K-points is very different from certain distribution, these K-points are quite far from one point.
+
+> For example, the total average of the distance is μt, the standard deviation of the total distances is σt, and the average of the distances to the nearest K points around a particular point is μi. If μi ≥ μt + α·σt where is larger than 1 such as 1.5 or 2, which means that this point is statistically far away from the points around it, it's considered an outlier and it will be deleted.
 
 
-
+<br><br><br>
 
 ### Clustering
+
+<br>
+
+#### (1) Euclidean Cluster Extraction
+
+![image](https://user-images.githubusercontent.com/89831708/184312660-4cdc78bc-d684-4a2d-b63e-8ea62052cd70.png)
+
+A randomly selected point out of several points is called a Seed Point. There is a black circle around the Seed Point, an area that has a certain distance from the Seed Point. There are also blue points in the circle in addition to the red Seed Point. Those points are regarded as the same cluster. You set another point in the same cluster as Seed Point again and perform clustering. If points of another cluster overlap the original cluster, you can see them as the same cluster.
+
+If you keep looking for clusters like this, some points don't have overlapping cluster points. In this case, you might think it's an outlier, or if you don't have enough points in the circle, you might think it's not the same cluster. This is an algorithm that simply determines whether it's the same class or not depending on the distance.
+
+<br>
+
+#### (2) K-Means clustering
+
+This has the disadvantage of setting the number of clusters in the LiDAR Point Cloud in advance. The LiDAR points are gray dots on the left. If you know that there are four clusters here, you specify four points.
