@@ -39,6 +39,29 @@ As the LiDAR rotates, it makes 10 to 20 measurements per second. So the rotation
 
 
 
+<br>
+
+* Measurement of LiDAR (Multi channels)
+
+  * the distance **R** to the object that is calculated from ToF, the Azimuth angle θ, and the elevation angle Φ. 
+  * the direction of the laser signal from LiDAR is determined by θ and Φ. 
+  * the three-dimensional position information is calculated by the direction and the distance **R**.
+  
+  * Each point data of the LiDAR contains information about the 3D position (X,Y,Z), Time when a measurement occurs, and the Intensity of the reflected signal(which measures how strong a reflected wave is received).
+
+<br>
+  
+  > **_Intensity of the reflected signal_** <br>
+  If the signal travels too far and come back, the intensity of the signal is low, but if it hits a highly reflective object that is far away from the LiDAR, the intensity increases. <br>
+  For ex, when a laser is emitted to the ground, the intensity of the laser that is reflected on the asphalt is low, and the intensity of the laser reflected on the lane(which colored with white paint) is high.
+
+<br>
+
+> **_Data size of the LiDAR Point genrated per second_** <br>
+(number of channels) x (number of samples per channel) x (Rotation Rate) <br>
+= (e.g) 64 x 3600 x 8 ≈ 1.75M -> 1.75M x 20bytes = 35Mbytes/sec (this is not exact value of the commercially available LiDAR, but similar)
+<br>
+
 **[LiDAR channels example]**
 |point|contents|
 |:---:|:---:|
@@ -46,13 +69,8 @@ As the LiDAR rotates, it makes 10 to 20 measurements per second. So the rotation
 | ... |" |
 |point N | x, y, z, Time, Intensity, Channel, Index |
 
-<br>
 
-* Measurement of LiDAR (Multi channels)
 
-  * the distance **R** to the object that is calculated from ToF, the Azimuth angle θ, and the elevation angle Φ. 
-  * the direction of the laser signal from LiDAR is determined by θ and Φ. 
-  * the three-dimensional position information is calculated by the direction and the distance R.
 
 
 ## 2. Preprocessing algorithms for Point Cloud data
@@ -60,6 +78,30 @@ As the LiDAR rotates, it makes 10 to 20 measurements per second. So the rotation
 <br>
 
 ### Filtering
+<br>
+
+#### (1) Voxel Grid Filter 
+We can represent three-dimensional space in three-dimensional cubes in terms of the `voxel`.
+LiDAR is creating a point cloud with a lot of points in th three-dimensional domain, we divide that three-dimensional space in three-dimensional area into voxels, and then bundle up LiDAR points in each voxel to make centroid point a representative point. So we leave one centroid pointper voxel and remove the rest. <br><br>
+`The Voxel Grid Filter` is a pre-processing method that allows noisiness to be seen separately and represents a point per voxel without necessarily using too much data, resulting in data with sufficient density. 
+
+<br>
+
+#### (2) Radius Outlier Removal Filter (ROR Filter)
+
+<img src="https://user-images.githubusercontent.com/89831708/184300188-3722d437-639d-4480-8f8a-b9a63f8457b4.png" width="600" height="400"/> [이미지 출처](https://velog.io/@lottocomeon/Lidar)
+
+If there are enough neighboring points within a given radius, we consider those points to be connected to other points.
+If there aren't, we remove them because we consider them as points that are far away. (Through this simple operation, you can get rid of the noise measurement that occurs when it snows)
+<br>
+
+#### (3) Statistical Outlier Removal Filter (SOR Filter)
+
+<img src="https://user-images.githubusercontent.com/89831708/184300544-2abd1565-cdb5-4c31-8fff-a9b3ebc3be80.png" width="600" height="400"/> [이미지 출처](https://velog.io/@lottocomeon/Lidar)
+
+If you calculate the distance to the nearest K points for each point, you can calculate the average distance among them. Then you can calculate the standard deviation of the distance. If the distace between each point and the surrounding K-points is very different from certain distribution, these K-points are quite far from one point.
+
+
 
 
 ### Clustering
